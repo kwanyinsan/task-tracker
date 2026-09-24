@@ -1,0 +1,13 @@
+CREATE TABLE tasks (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    title VARCHAR(200) NOT NULL
+        CHECK (length(trim(title)) > 0),
+
+    category TEXT NOT NULL
+        CHECK (category IN ('Work', 'Personal')),
+
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
