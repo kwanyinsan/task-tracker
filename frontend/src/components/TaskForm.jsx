@@ -39,16 +39,18 @@ export default function TaskForm({ onCreate, disabled }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <div className="field">
+    <form className="task-form" onSubmit={handleSubmit} noValidate>
+      <div className="field task-title-field">
         <label htmlFor="task-title">Task title</label>
 
         <input
           id="task-title"
           type="text"
+          placeholder="What needs to get done?"
           value={title}
           maxLength={200}
           disabled={disabled}
+          aria-describedby={validationError ? 'task-form-error' : undefined}
           onChange={(event) => {
             setTitle(event.target.value);
             setValidationError('');
@@ -63,6 +65,7 @@ export default function TaskForm({ onCreate, disabled }) {
           id="task-category"
           value={category}
           disabled={disabled}
+          aria-describedby={validationError ? 'task-form-error' : undefined}
           onChange={(event) => {
             setCategory(event.target.value);
             setValidationError('');
@@ -73,15 +76,15 @@ export default function TaskForm({ onCreate, disabled }) {
         </select>
       </div>
 
+      <button className="primary-button" type="submit" disabled={disabled}>
+        Add Task
+      </button>
+
       {validationError && (
-        <p className="error" role="alert">
+        <p id="task-form-error" className="error" role="alert">
           {validationError}
         </p>
       )}
-
-      <button type="submit" disabled={disabled}>
-        Add Task
-      </button>
     </form>
   );
 }

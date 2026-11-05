@@ -159,66 +159,73 @@ export default function App() {
 
   return (
     <main className="app" aria-busy={isBusy}>
-      <h1>Task Tracker</h1>
-      <p>Manage Work and Personal tasks.</p>
+      <header className="app-header">
+        <h1>Task Tracker</h1>
+        <p>Manage Work and Personal tasks.</p>
+      </header>
 
       <TaskForm
         onCreate={handleCreateTask}
         disabled={isBusy}
       />
 
-      <CategoryFilter
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-        disabled={isBusy}
-      />
+      <section className="task-panel" aria-label="Tasks">
+        <div className="task-toolbar">
+          <CategoryFilter
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            disabled={isBusy}
+          />
 
-      <p>
-        <button
-          type="button"
-          onClick={handleReloadTasks}
-          disabled={isBusy}
-        >
-          Reload tasks
-        </button>
-      </p>
+          <button
+            type="button"
+            className="reload-button"
+            onClick={handleReloadTasks}
+            disabled={isBusy}
+          >
+            Reload tasks
+          </button>
+        </div>
 
-      {error && (
-        <p className="error" role="alert">
-          {error}
-        </p>
-      )}
+        <div className="task-feedback">
+          {error && (
+            <p className="error" role="alert">
+              {error}
+            </p>
+          )}
 
-      {notice && (
-        <p role="status">
-          {notice}
-        </p>
-      )}
+          {notice && (
+            <p role="status">
+              {notice}
+            </p>
+          )}
 
-      {isLoading && (
-        <p role="status">
-          Loading tasks...
-        </p>
-      )}
+          {isLoading && (
+            <p role="status">
+              Loading tasks...
+            </p>
+          )}
 
-      {isSaving && (
-        <p role="status">
-          Saving change...
-        </p>
-      )}
+          {isSaving && (
+            <p role="status">
+              Saving change...
+            </p>
+          )}
+        </div>
 
-      {!isLoading && tasks.length > 0 && (
-        <TaskList
-          tasks={tasks}
-          onComplete={handleCompleteTask}
-          onDelete={handleDeleteTask}
-          disabled={isBusy}
-        />
-      )}
+        {!isLoading && tasks.length > 0 && (
+          <TaskList
+            tasks={tasks}
+            onComplete={handleCompleteTask}
+            onDelete={handleDeleteTask}
+            disabled={isBusy}
+          />
+        )}
 
-      {!isLoading && !error && tasks.length === 0 && (
-        <p>No tasks match the current filter.</p>
-      )}
+        {!isLoading && !error && tasks.length === 0 && (
+          <p className="empty-state">No tasks match the current filter.</p>
+        )}
+      </section>
     </main>
   );
 }

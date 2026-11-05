@@ -1,6 +1,21 @@
 function TaskItem({ task, onComplete, onDelete, disabled }) {
   return (
     <li className="task-item">
+      <label className="completion-control">
+        <input
+          type="checkbox"
+          className="completion-checkbox"
+          checked={task.completed}
+          disabled={disabled || task.completed || !onComplete}
+          onChange={() => onComplete?.(task.id)}
+          aria-label={
+            task.completed
+              ? `${task.title} completed`
+              : `Mark ${task.title} completed`
+          }
+        />
+      </label>
+
       <div className="task-details">
         <p
           className={
@@ -18,15 +33,6 @@ function TaskItem({ task, onComplete, onDelete, disabled }) {
       </div>
 
       <div className="task-actions">
-        <button
-          type="button"
-          disabled={disabled || task.completed || !onComplete}
-          onClick={() => onComplete?.(task.id)}
-          aria-label={`Mark ${task.title} completed`}
-        >
-          {task.completed ? 'Completed' : 'Mark completed'}
-        </button>
-
         <button
           type="button"
           className="delete-button"
@@ -48,7 +54,7 @@ export default function TaskList({
   disabled,
 }) {
   if (tasks.length === 0) {
-    return <p>No tasks match the current filter.</p>;
+    return <p className="empty-state">No tasks match the current filter.</p>;
   }
 
   return (

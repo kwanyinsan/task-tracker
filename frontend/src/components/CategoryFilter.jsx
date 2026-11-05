@@ -2,7 +2,7 @@ const categories = ['All', 'Work', 'Personal'];
 
 export default function CategoryFilter({ value, onChange, disabled }) {
   return (
-    <section aria-label="Filter tasks by category">
+    <section className="category-filter" aria-label="Filter tasks by category">
       <h2>Filter</h2>
 
       <div className="filters">
